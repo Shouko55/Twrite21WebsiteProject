@@ -1,0 +1,1598 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StudyHub | Study Tips &amp; Tech for Students</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      /* ============================================
+       StudyHub — Page-by-Page (SPA) Stylesheet
+       ============================================ */
+
+      /* ---------- GLOBAL / RESET ---------- */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary: #4a90d9;
+        --primary-dark: #3572b3;
+        --accent: #6bc1a5;
+        --bg: #f7f9fc;
+        --text: #2d3436;
+        --muted: #6b7280;
+        --white: #ffffff;
+        --border: #e2e8f0;
+        --radius: 10px;
+        --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+        background: #f4f4f6;
+        color: var(--text);
+        line-height: 1.6;
+        font-size: 16px;
+      }
+
+      /* ---------- PAGE SYSTEM (SPA) ---------- */
+      .page {
+        display: none;
+      }
+      .page.active {
+        display: block;
+        animation: fadeIn 0.25s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* ---------- HEADER ---------- */
+      .site-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        background: var(--white);
+        padding: 14px 32px;
+        box-shadow: var(--shadow);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--primary);
+        cursor: pointer;
+      }
+
+      .logo i {
+        color: var(--accent);
+      }
+
+      .nav-bar {
+        display: flex;
+        gap: 20px;
+      }
+
+      .nav-bar a {
+        text-decoration: none;
+        color: var(--text);
+        font-weight: 500;
+        padding: 4px 2px;
+        transition: color 0.2s;
+        cursor: pointer;
+      }
+
+      .nav-bar a:hover {
+        color: var(--primary);
+      }
+
+      .search-box {
+        display: flex;
+        align-items: center;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+
+      .search-box input {
+        border: none;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+        outline: none;
+        width: 170px;
+      }
+
+      .search-box button {
+        background: var(--primary);
+        color: var(--white);
+        border: none;
+        padding: 9px 14px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .search-box button:hover {
+        background: var(--primary-dark);
+      }
+
+      /* ---------- BREADCRUMB ---------- */
+      .breadcrumb {
+        padding: 10px 32px;
+        font-size: 0.85rem;
+        color: var(--muted);
+        background: var(--white);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .breadcrumb a {
+        color: var(--primary);
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .breadcrumb a:hover {
+        text-decoration: underline;
+      }
+
+      /* ---------- HERO ---------- */
+      .hero {
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--primary-dark) 100%
+        );
+        color: var(--white);
+        text-align: center;
+        padding: 70px 24px;
+      }
+
+      .hero h1 {
+        font-size: 2.4rem;
+        margin-bottom: 12px;
+      }
+      .hero p {
+        max-width: 640px;
+        margin: 0 auto 24px;
+        font-size: 1.1rem;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        display: inline-block;
+        padding: 12px 24px;
+        border-radius: var(--radius);
+        text-decoration: none;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        font-size: 1rem;
+        transition:
+          transform 0.15s,
+          background 0.2s;
+      }
+
+      .btn-primary:hover,
+      .btn-secondary:hover,
+      .back-btn:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+      }
+
+      .btn-primary {
+        background: var(--white);
+        color: var(--primary-dark);
+      }
+
+      .btn-secondary {
+        background: var(--accent);
+        color: var(--white);
+        margin-top: 8px;
+      }
+      .btn-secondary:hover {
+        background: #57a98d;
+      }
+
+      /* ---------- SECTIONS ---------- */
+      section {
+        padding: 50px 32px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      section h2 {
+        font-size: 1.7rem;
+        margin-bottom: 24px;
+        color: var(--primary-dark);
+        border-left: 5px solid var(--accent);
+        padding-left: 12px;
+      }
+
+      /* ---------- FEATURED POST ---------- */
+      .featured-card {
+        display: flex;
+        gap: 24px;
+        background: var(--white);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        align-items: center;
+      }
+
+      .featured-card img {
+        width: 45%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .featured-card div {
+        padding: 24px;
+      }
+      .featured-card h3 {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+        color: var(--primary-dark);
+      }
+
+      /* ---------- POST GRID ---------- */
+      .post-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 24px;
+      }
+
+      .post-card {
+        background: var(--white);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .post-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+      }
+
+      .post-card img {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+      }
+
+      .post-card h3,
+      .post-card p,
+      .post-card a {
+        padding: 0 16px;
+      }
+
+      .post-card h3 {
+        margin: 14px 0 6px;
+        font-size: 1.15rem;
+        color: var(--primary-dark);
+      }
+
+      .post-card .meta {
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+
+      .post-card p {
+        margin-bottom: 10px;
+        font-size: 0.92rem;
+      }
+
+      .post-card a {
+        display: inline-block;
+        margin: 0 16px 16px;
+        color: var(--accent);
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .post-card a:hover {
+        text-decoration: underline;
+      }
+
+      /* ---------- TIPS TABLE ---------- */
+      .tips-section table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--white);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+
+      .tips-section caption {
+        caption-side: top;
+        text-align: left;
+        font-weight: 600;
+        padding-bottom: 8px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .tips-section th {
+        background: var(--primary);
+        color: var(--white);
+        padding: 12px;
+        text-align: left;
+      }
+      .tips-section td {
+        padding: 12px;
+        border-bottom: 1px solid var(--border);
+      }
+      .tips-section tr:last-child td {
+        border-bottom: none;
+      }
+      .tips-section tr:nth-child(even) {
+        background: #f0f5fb;
+      }
+
+      /* ---------- ABOUT ---------- */
+      .about-section p {
+        max-width: 760px;
+        color: var(--text);
+      }
+
+      /* ---------- DEV TEAM ---------- */
+      .dev-team-section {
+        padding: 50px 32px;
+        max-width: 1100px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .dev-team-section h2 {
+        font-size: 1.7rem;
+        margin-bottom: 40px;
+        color: var(--primary-dark);
+        border-left: none;
+        padding-left: 0;
+        text-align: center;
+        border-bottom: 4px solid var(--accent);
+        display: inline-block;
+        padding-bottom: 8px;
+      }
+
+      .dev-grid {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+      }
+
+      .dev-card {
+        background: var(--white);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 30px 20px;
+        width: 280px;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .dev-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .dev-card img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 4px solid var(--border);
+        margin-bottom: 16px;
+      }
+
+      .dev-card h3 {
+        font-size: 1.2rem;
+        color: var(--primary-dark);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .dev-card p {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      /* ---------- ARTICLE PAGES ---------- */
+      .article-page {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 50px 32px;
+      }
+
+      .article-page h1 {
+        font-size: 2rem;
+        color: var(--primary-dark);
+        margin-bottom: 10px;
+        line-height: 1.3;
+      }
+
+      .article-meta {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-bottom: 24px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 14px;
+      }
+
+      .article-page h2 {
+        font-size: 1.35rem;
+        color: var(--primary-dark);
+        margin: 28px 0 12px;
+        border-left: 4px solid var(--accent);
+        padding-left: 10px;
+      }
+
+      .article-page p {
+        margin-bottom: 14px;
+      }
+      .article-page ul {
+        margin: 0 0 16px 24px;
+      }
+      .article-page ul li {
+        margin-bottom: 8px;
+      }
+
+      .article-page table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 18px 0;
+        background: var(--white);
+        box-shadow: var(--shadow);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+
+      .article-page th {
+        background: var(--primary);
+        color: var(--white);
+        padding: 10px 14px;
+        text-align: left;
+      }
+
+      .article-page td {
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--border);
+      }
+      .article-page tr:last-child td {
+        border-bottom: none;
+      }
+      .article-page tr:nth-child(even) {
+        background: #f0f5fb;
+      }
+
+      .article-page blockquote {
+        border-left: 4px solid var(--accent);
+        background: #f0f9f4;
+        padding: 12px 18px;
+        margin: 16px 0;
+        font-style: italic;
+        color: #2d4a3e;
+      }
+
+      .back-btn {
+        display: inline-block;
+        margin-top: 30px;
+        background: var(--primary);
+        color: var(--white);
+        padding: 10px 20px;
+        border-radius: var(--radius);
+        text-decoration: none;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        font-size: 0.95rem;
+        transition:
+          transform 0.2s,
+          background 0.2s;
+      }
+
+      .reference-box {
+        background: #eef4fb;
+        border-left: 4px solid var(--primary);
+        padding: 16px 20px;
+        margin-top: 30px;
+        border-radius: 6px;
+        font-size: 0.92rem;
+      }
+
+      .reference-box h4 {
+        color: var(--primary-dark);
+        margin-bottom: 8px;
+        font-size: 1rem;
+      }
+
+      .reference-box p {
+        margin-bottom: 6px;
+      }
+
+      /* ---------- FOOTER ---------- */
+      .site-footer {
+        background: #2d3436;
+        color: #dfe6e9;
+        padding: 40px 32px 20px;
+        margin-top: 40px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        justify-content: space-between;
+        /* Fade animation only on the footer */
+        transition: opacity 0.2s ease-in-out;
+      }
+
+      /* Trigger class for the footer fade */
+      .site-footer.fade-in-footer {
+        animation: footerFadeIn 0.2s ease-in-out; /* CHANGED: Now 0.2s for a normal/snappy speed */
+      }
+
+      @keyframes footerFadeIn {
+        from {
+          opacity: 0.2;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .footer-col {
+        flex: 1 1 220px;
+      }
+      .footer-col h4 {
+        color: var(--accent);
+        margin-bottom: 10px;
+        font-size: 1rem;
+      }
+      .footer-col p {
+        font-size: 0.88rem;
+        margin-bottom: 6px;
+        color: #b2bec3;
+      }
+      .footer-col a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      .footer-col a:hover {
+        text-decoration: underline;
+      }
+
+      .last-update {
+        flex-basis: 100%;
+        text-align: center;
+        font-size: 0.8rem;
+        color: #636e72;
+        border-top: 1px solid #444;
+        padding-top: 14px;
+        margin-top: 10px;
+      }
+
+      /* ---------- RESPONSIVE ---------- */
+      @media (max-width: 700px) {
+        .site-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .featured-card {
+          flex-direction: column;
+        }
+        .featured-card img {
+          width: 100%;
+        }
+        .hero h1 {
+          font-size: 1.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============================================
+       GLOBAL HEADER (always visible)
+       ============================================ -->
+    <header class="site-header">
+      <div class="logo" onclick="showPage('page-home')">
+        <i class="fas fa-book-open"></i>
+        <span>StudyHub</span>
+      </div>
+      <nav class="nav-bar" aria-label="Main navigation">
+        <a onclick="showPage('page-home')">Home</a>
+        <a onclick="showPage('page-blog')">Blog</a>
+        <a onclick="showPage('page-tips')">Study Tips</a>
+        <a onclick="showPage('page-about')">About</a>
+        <!-- Contact triggers footer fade -->
+        <a onclick="scrollToContact()">Contact</a>
+      </nav>
+      <div class="search-box">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search posts..."
+          aria-label="Search posts"
+        />
+        <button id="searchBtn" aria-label="Search">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- ============================================
+       PAGE 1: HOME
+       ============================================ -->
+    <div id="page-home" class="page active">
+      <nav class="breadcrumb">
+        <a onclick="showPage('page-home')">Home</a>
+      </nav>
+
+      <section class="hero">
+        <h1>Study Smarter, Not Harder.</h1>
+        <p>
+          Practical study tips, note-taking apps, and productivity tools for
+          busy college students. <strong>Updated weekly.</strong>
+        </p>
+        <button class="btn-primary" onclick="showPage('page-blog')">
+          Read the Blog
+        </button>
+      </section>
+
+      <section class="featured">
+        <h2>Featured Post</h2>
+        <article class="featured-card">
+          <img
+            src="https://placehold.co/400x250/4a90d9/ffffff?text=Featured+Post"
+            alt="Featured post graphic of a student studying with a laptop"
+          />
+          <div>
+            <h3>5 Note-Taking Apps That Actually Work</h3>
+            <p>
+              We tested Notion, Obsidian, OneNote, Google Keep, and Evernote.
+              Here's which ones helped students retain more information and
+              which ones didn't.
+            </p>
+            <button
+              class="btn-secondary"
+              onclick="showPage('page-article-apps')"
+            >
+              Read More →
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <section id="posts" class="posts-section">
+        <h2>Latest Posts</h2>
+        <div class="post-grid" id="postGrid">
+          <article
+            class="post-card"
+            data-title="5 note-taking apps that actually work"
+          >
+            <img
+              src="https://placehold.co/300x180/6bc1a5/ffffff?text=Note+Apps"
+              alt="Icons of note-taking applications"
+            />
+            <h3>5 Note-Taking Apps That Actually Work</h3>
+            <p class="meta">
+              <i class="far fa-calendar"></i> May 12, 2025 ·
+              <i class="far fa-clock"></i> 4 min read
+            </p>
+            <p>We tested five apps for a month. Here's what we found.</p>
+            <a onclick="showPage('page-article-apps')">Read More →</a>
+          </article>
+
+          <article class="post-card" data-title="the pomodoro method explained">
+            <img
+              src="https://placehold.co/300x180/e8a87c/ffffff?text=Pomodoro"
+              alt="Illustration of a tomato timer representing the Pomodoro technique"
+            />
+            <h3>The Pomodoro Method, Explained</h3>
+            <p class="meta">
+              <i class="far fa-calendar"></i> May 8, 2025 ·
+              <i class="far fa-clock"></i> 3 min read
+            </p>
+            <p>25 minutes of focus. 5 minutes of rest. Here's why it works.</p>
+            <a onclick="showPage('page-article-pomodoro')">Read More →</a>
+          </article>
+
+          <article
+            class="post-card"
+            data-title="how to cite sources correctly in apa and mla"
+          >
+            <img
+              src="https://placehold.co/300x180/c9a5e8/ffffff?text=Citing+Sources"
+              alt="Books and a citation guide representing APA and MLA formats"
+            />
+            <h3>How to Cite Sources (APA &amp; MLA)</h3>
+            <p class="meta">
+              <i class="far fa-calendar"></i> May 3, 2025 ·
+              <i class="far fa-clock"></i> 5 min read
+            </p>
+            <p>A quick cheat sheet for the two most common citation styles.</p>
+            <a onclick="showPage('page-article-citation')">Read More →</a>
+          </article>
+
+          <article
+            class="post-card"
+            data-title="best free productivity tools for students"
+          >
+            <img
+              src="https://placehold.co/300x180/6c8ae8/ffffff?text=Productivity"
+              alt="Productivity dashboard on a laptop screen"
+            />
+            <h3>Best Free Productivity Tools for Students</h3>
+            <p class="meta">
+              <i class="far fa-calendar"></i> April 28, 2025 ·
+              <i class="far fa-clock"></i> 4 min read
+            </p>
+            <p>Trello, Google Calendar, and Notion — all free for students.</p>
+            <a onclick="showPage('page-article-productivity')">Read More →</a>
+          </article>
+        </div>
+      </section>
+
+      <section id="tips" class="tips-section">
+        <h2>Quick Study Tips</h2>
+        <table>
+          <caption>
+            Table 1: Study methods ranked by effectiveness
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Method</th>
+              <th scope="col">Best For</th>
+              <th scope="col">Time Needed</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Active Recall</td>
+              <td>Memorizing facts</td>
+              <td>20 min/day</td>
+            </tr>
+            <tr>
+              <td>Spaced Repetition</td>
+              <td>Long-term retention</td>
+              <td>15 min/day</td>
+            </tr>
+            <tr>
+              <td>Pomodoro</td>
+              <td>Focus &amp; avoiding burnout</td>
+              <td>25-min blocks</td>
+            </tr>
+            <tr>
+              <td>Feynman Technique</td>
+              <td>Deep understanding</td>
+              <td>30 min/topic</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="about" class="about-section">
+        <h2>About StudyHub</h2>
+        <p>
+          StudyHub is a student-run blog that shares practical, tested study
+          tips and free tech tools. Our goal is to help students study more
+          effectively without spending money on expensive apps.
+        </p>
+      </section>
+    </div>
+
+    <!-- ============================================
+       PAGE 2: BLOG (ALL POSTS)
+       ============================================ -->
+    <div id="page-blog" class="page">
+      <nav class="breadcrumb">
+        <a onclick="showPage('page-home')">Home</a> &gt; <span>Blog</span>
+      </nav>
+
+      <section>
+        <h2>All Blog Posts</h2>
+        <div class="post-grid">
+          <article class="post-card">
+            <img
+              src="https://placehold.co/300x180/6bc1a5/ffffff?text=Note+Apps"
+              alt="Icons of note-taking applications"
+            />
+            <h3>5 Note-Taking Apps That Actually Work</h3>
+            <p class="meta">
+              <i class="far fa-calendar"></i> May 12, 2025 ·
+              <i class="far fa-clock"></i> 4 min read
+            </p>
+            <p>We tested five apps for a month. Here's what we found.</p>
+            <a onclick="showPage('page-article-apps')">Read More →</a>
+          </article>
+
+          <article class="post-card">
+            <img
+              src="https://placehold.co/300x180/e8a87c/ffffff?text=Pomodoro"
+              alt="Illustration of a tomato timer representing the Pomodoro technique"
+            />
+            <h3>The Pomodoro Method, Explained</h3>
+            <p class="meta">
+              <i class="far fa-calendar"></i> May 8, 2025 ·
+              <i class="far fa-clock"></i> 3 min read
+            </p>
+            <p>25 minutes of focus. 5 minutes of rest. Here's why it works.</p>
+            <a onclick="showPage('page-article-pomodoro')">Read More →</a>
+          </article>
+
+          <article class="post-card">
+            <img
+              src="https://placehold.co/300x180/c9a5e8/ffffff?text=Citing+Sources"
+              alt="Books and a citation guide representing APA and MLA formats"
+            />
+            <h3>How to Cite Sources (APA &amp; MLA)</h3>
+            <p class="meta">
+              <i class="far fa-calendar"></i> May 3, 2025 ·
+              <i class="far fa-clock"></i> 5 min read
+            </p>
+            <p>A quick cheat sheet for the two most common citation styles.</p>
+            <a onclick="showPage('page-article-citation')">Read More →</a>
+          </article>
+
+          <article class="post-card">
+            <img
+              src="https://placehold.co/300x180/6c8ae8/ffffff?text=Productivity"
+              alt="Productivity dashboard on a laptop screen"
+            />
+            <h3>Best Free Productivity Tools for Students</h3>
+            <p class="meta">
+              <i class="far fa-calendar"></i> April 28, 2025 ·
+              <i class="far fa-clock"></i> 4 min read
+            </p>
+            <p>Trello, Google Calendar, and Notion — all free for students.</p>
+            <a onclick="showPage('page-article-productivity')">Read More →</a>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================================
+       PAGE 3: STUDY TIPS (TABLE)
+       ============================================ -->
+    <div id="page-tips" class="page">
+      <nav class="breadcrumb">
+        <a onclick="showPage('page-home')">Home</a> &gt; <span>Study Tips</span>
+      </nav>
+
+      <section class="tips-section">
+        <h2>Quick Study Tips</h2>
+        <table>
+          <caption>
+            Table 1: Study methods ranked by effectiveness
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Method</th>
+              <th scope="col">Best For</th>
+              <th scope="col">Time Needed</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Active Recall</td>
+              <td>Memorizing facts</td>
+              <td>20 min/day</td>
+            </tr>
+            <tr>
+              <td>Spaced Repetition</td>
+              <td>Long-term retention</td>
+              <td>15 min/day</td>
+            </tr>
+            <tr>
+              <td>Pomodoro</td>
+              <td>Focus &amp; avoiding burnout</td>
+              <td>25-min blocks</td>
+            </tr>
+            <tr>
+              <td>Feynman Technique</td>
+              <td>Deep understanding</td>
+              <td>30 min/topic</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+
+    <!-- ============================================
+       PAGE 4: ABOUT
+       ============================================ -->
+    <div id="page-about" class="page">
+      <nav class="breadcrumb">
+        <a onclick="showPage('page-home')">Home</a> &gt; <span>About</span>
+      </nav>
+
+      <section class="about-section">
+        <h2>About StudyHub</h2>
+        <p>
+          StudyHub is a student-run blog that shares practical, tested study
+          tips and free tech tools. Our goal is to help students study more
+          effectively without spending money on expensive apps.
+        </p>
+        <p style="margin-top: 14px">
+          Our content follows the guidelines in
+          <em>Technical Writing for Success</em>, Chapter 7: Writing for the
+          Web.
+        </p>
+      </section>
+    </div>
+
+    <!-- ============================================
+       ARTICLE PAGE 1: NOTE-TAKING APPS
+       ============================================ -->
+    <div id="page-article-apps" class="page article-page">
+      <nav class="breadcrumb">
+        <a onclick="showPage('page-home')">Home</a> &gt;
+        <a onclick="showPage('page-blog')">Blog</a> &gt;
+        <span>5 Note-Taking Apps</span>
+      </nav>
+
+      <h1>5 Note-Taking Apps That Actually Work</h1>
+      <p class="article-meta">
+        By the StudyHub Team · Published May 12, 2025 · 4 min read
+      </p>
+
+      <p>
+        We tested five popular note-taking apps for one month, using each one
+        for real class notes. Here's what we found ranked from best to worst for
+        college students on a budget.
+      </p>
+
+      <h2>1. Notion (Free for students)</h2>
+      <p>
+        <strong>Best for:</strong> All-in-one workspace notes, to-do lists, and
+        databases in one place.
+      </p>
+      <p>
+        <strong>Pros:</strong> Extremely flexible, free with a student email,
+        syncs across devices.<br />
+        <strong>Cons:</strong> Has a learning curve can feel overwhelming at
+        first.
+      </p>
+
+      <h2>2. Obsidian (Free)</h2>
+      <p>
+        <strong>Best for:</strong> Connecting ideas with linked notes great for
+        research and long-term knowledge.
+      </p>
+      <p>
+        <strong>Pros:</strong> Works offline, stores files locally, powerful
+        linking.<br />
+        <strong>Cons:</strong> No built-in sync unless you pay, less,
+        beginner-friendly.
+      </p>
+
+      <h2>3. Microsoft OneNote (Free)</h2>
+      <p>
+        <strong>Best for:</strong> Handwritten notes on tablets and laptops with
+        stylus support.
+      </p>
+      <p>
+        <strong>Pros:</strong> Excellent free-form canvas, free with a Microsoft
+        account.<br />
+        <strong>Cons:</strong> Sync can be slow organization can get messy.
+      </p>
+
+      <h2>4. Google Keep (Free)</h2>
+      <p><strong>Best for:</strong> Quick, short notes and reminders.</p>
+      <p>
+        <strong>Pros:</strong> Fast, simple, syncs with Google account.<br />
+        <strong>Cons:</strong> No advanced formatting limited for long notes.
+      </p>
+
+      <h2>5. Evernote (Free)</h2>
+      <p>
+        <strong>Best for:</strong> Web clipping and scanning paper documents.
+      </p>
+      <p>
+        <strong>Pros:</strong> Powerful search, OCR for scanned notes.<br />
+        <strong>Cons:</strong> Free tier is now very limited best features
+        require payment.
+      </p>
+
+      <h2>Quick Comparison</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>App</th>
+            <th>Price</th>
+            <th>Best For</th>
+            <th>Offline?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Notion</td>
+            <td>Free (students)</td>
+            <td>All-in-one</td>
+            <td>Limited</td>
+          </tr>
+          <tr>
+            <td>Obsidian</td>
+            <td>Free</td>
+            <td>Linked notes</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>OneNote</td>
+            <td>Free</td>
+            <td>Handwriting</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Google Keep</td>
+            <td>Free</td>
+            <td>Quick notes</td>
+            <td>Limited</td>
+          </tr>
+          <tr>
+            <td>Evernote</td>
+            <td>Free</td>
+            <td>Web clipping</td>
+            <td>Yes</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="reference-box">
+        <h4>References</h4>
+        <p>
+          Notion Labs. (2025). <em>Notion - Your connected workspace</em>.
+          https://www.notion.so
+        </p>
+        <p>
+          Obsidian. (2025). <em>Obsidian - Sharpen your thinking</em>.
+          https://obsidian.md
+        </p>
+        <p>
+          Microsoft. (2025). <em>Microsoft OneNote</em>. https://www.onenote.com
+        </p>
+        <p>Google. (2025). <em>Google Keep</em>. https://keep.google.com</p>
+        <p>Evernote. (2025). <em>Evernote</em>. https://evernote.com</p>
+      </div>
+
+      <button class="back-btn" onclick="showPage('page-home')">
+        ← Back to Home
+      </button>
+    </div>
+
+    <!-- ============================================
+       ARTICLE PAGE 2: POMODORO METHOD
+       ============================================ -->
+    <div id="page-article-pomodoro" class="page article-page">
+      <nav class="breadcrumb">
+        <a onclick="showPage('page-home')">Home</a> &gt;
+        <a onclick="showPage('page-blog')">Blog</a> &gt;
+        <span>The Pomodoro Method</span>
+      </nav>
+
+      <h1>The Pomodoro Method, Explained</h1>
+      <p class="article-meta">
+        By the StudyHub Team · Published May 8, 2025 · 3 min read
+      </p>
+
+      <p>
+        The Pomodoro Technique is one of the simplest and most effective
+        time-management methods for studying. It was developed by Francesco
+        Cirillo in the late 1980s and is still used by millions of students
+        today.
+      </p>
+
+      <h2>How It Works</h2>
+      <p>
+        The method is simple: work in focused 25-minute blocks, then take a
+        5-minute break. After four blocks, take a longer break of 15–30 minutes.
+      </p>
+      <ul>
+        <li><strong>Step 1:</strong> Choose a task.</li>
+        <li><strong>Step 2:</strong> Set a timer for 25 minutes.</li>
+        <li>
+          <strong>Step 3:</strong> Work until the timer rings. No distractions.
+        </li>
+        <li><strong>Step 4:</strong> Take a 5-minute break.</li>
+        <li>
+          <strong>Step 5:</strong> After four Pomodoros, take a 15–30 minute
+          break.
+        </li>
+      </ul>
+
+      <h2>Why It Works</h2>
+      <p>
+        Studies on attention and fatigue show that the human brain can only
+        sustain deep focus for limited periods. Short, timed work sessions match
+        the brain's natural attention cycle and prevent burnout.
+      </p>
+      <blockquote>
+        "The Pomodoro Technique helps you focus on one task at a time and
+        eliminates the anxiety of a large, overwhelming project." — Francesco
+        Cirillo
+      </blockquote>
+
+      <h2>Tips for Students</h2>
+      <ul>
+        <li>Turn off notifications during your 25-minute block.</li>
+        <li>
+          Keep a "distraction list" — write down anything you want to check
+          later.
+        </li>
+        <li>
+          Use the break to stand up, stretch, or drink water — not to scroll
+          social media.
+        </li>
+      </ul>
+
+      <div class="reference-box">
+        <h4>References</h4>
+        <p>
+          Cirillo, F. (2018).
+          <em
+            >The Pomodoro Technique: The Acclaimed Time-Management System That
+            Has Transformed How We Work</em
+          >. Currency Publishing.
+        </p>
+        <p>
+          Cirillo, F. (2025). <em>The Pomodoro Technique</em>.
+          https://francescocirillo.com/pages/pomodoro-technique
+        </p>
+      </div>
+
+      <button class="back-btn" onclick="showPage('page-home')">
+        ← Back to Home
+      </button>
+    </div>
+
+    <!-- ============================================
+       ARTICLE PAGE 3: CITING SOURCES
+       ============================================ -->
+    <div id="page-article-citation" class="page article-page">
+      <nav class="breadcrumb">
+        <a onclick="showPage('page-home')">Home</a> &gt;
+        <a onclick="showPage('page-blog')">Blog</a> &gt;
+        <span>Citing Sources</span>
+      </nav>
+
+      <h1>How to Cite Sources (APA &amp; MLA)</h1>
+      <p class="article-meta">
+        By the StudyHub Team · Published May 3, 2025 · 5 min read
+      </p>
+
+      <p>
+        Two citation styles dominate college writing:
+        <strong>APA</strong> (social sciences) and
+        <strong>MLA</strong> (humanities). Here's a quick cheat sheet for the
+        most common sources.
+      </p>
+
+      <h2>APA 7th Edition — Quick Reference</h2>
+      <p><strong>Book:</strong></p>
+      <blockquote>
+        Author, A. A. (Year). <em>Title of work</em>. Publisher.
+      </blockquote>
+      <p><strong>Example:</strong></p>
+      <blockquote>
+        Brown, P. C. (2014). <em>Make it stick</em>. Harvard University Press.
+      </blockquote>
+      <p><strong>Website article:</strong></p>
+      <blockquote>
+        Author, A. A. (Year, Month Day). <em>Title of article</em>. Site Name.
+        URL
+      </blockquote>
+      <p><strong>Example:</strong></p>
+      <blockquote>
+        StudyHub Team. (2025, May 12).
+        <em>5 note-taking apps that actually work</em>. StudyHub.
+        https://studyhub.example/apps
+      </blockquote>
+
+      <h2>MLA 9th Edition — Quick Reference</h2>
+      <p><strong>Book:</strong></p>
+      <blockquote>
+        Author Last, First. <em>Title of Work</em>. Publisher, Year.
+      </blockquote>
+      <p><strong>Example:</strong></p>
+      <blockquote>
+        Brown, Peter C. <em>Make It Stick</em>. Harvard UP, 2014.
+      </blockquote>
+      <p><strong>Website article:</strong></p>
+      <blockquote>
+        Author Last, First. "Title of Article." <em>Site Name</em>, Date, URL.
+      </blockquote>
+      <p><strong>Example:</strong></p>
+      <blockquote>
+        StudyHub Team. "5 Note-Taking Apps That Actually Work."
+        <em>StudyHub</em>, 12 May 2025, studyhub.example/apps.
+      </blockquote>
+
+      <h2>Side-by-Side Comparison</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>APA 7</th>
+            <th>MLA 9</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Used in</td>
+            <td>Social sciences</td>
+            <td>Humanities</td>
+          </tr>
+          <tr>
+            <td>Author name format</td>
+            <td>Last, F. M.</td>
+            <td>Last, First</td>
+          </tr>
+          <tr>
+            <td>In-text citation</td>
+            <td>(Author, Year)</td>
+            <td>(Author Page)</td>
+          </tr>
+          <tr>
+            <td>Reference list title</td>
+            <td>"References"</td>
+            <td>"Works Cited"</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="reference-box">
+        <h4>References</h4>
+        <p>
+          American Psychological Association. (2020).
+          <em>Publication manual of the American Psychological Association</em>
+          (7th ed.). https://doi.org/10.1037/0000165-000
+        </p>
+        <p>
+          Modern Language Association. (2021). <em>MLA handbook</em> (9th ed.).
+        </p>
+        <p>
+          Purdue Online Writing Lab. (2025).
+          <em>APA formatting and style guide</em>. https://owl.purdue.edu
+        </p>
+      </div>
+
+      <button class="back-btn" onclick="showPage('page-home')">
+        ← Back to Home
+      </button>
+    </div>
+
+    <!-- ============================================
+       ARTICLE PAGE 4: PRODUCTIVITY TOOLS
+       ============================================ -->
+    <div id="page-article-productivity" class="page article-page">
+      <nav class="breadcrumb">
+        <a onclick="showPage('page-home')">Home</a> &gt;
+        <a onclick="showPage('page-blog')">Blog</a> &gt;
+        <span>Productivity Tools</span>
+      </nav>
+
+      <h1>Best Free Productivity Tools for Students</h1>
+      <p class="article-meta">
+        By the StudyHub Team · Published April 28, 2025 · 4 min read
+      </p>
+
+      <p>
+        You don't need expensive software to stay organized. These three tools
+        are completely free for students and cover the essentials: task
+        management, scheduling, and note organization.
+      </p>
+
+      <h2>1. Trello (Free)</h2>
+      <p>
+        <strong>Best for:</strong> Visual task management using boards and
+        cards.
+      </p>
+      <p>
+        Create a board for each class. Add cards for assignments and drag them
+        across columns: "To Do," "In Progress," and "Done." The free plan allows
+        unlimited boards, cards, and lists.
+      </p>
+
+      <h2>2. Google Calendar (Free)</h2>
+      <p>
+        <strong>Best for:</strong> Scheduling classes, deadlines, and study
+        blocks.
+      </p>
+      <p>
+        Use color-coding for different subjects. Set reminders 1 day and 1 hour
+        before deadlines. Sync it with your phone so you never miss a due date.
+      </p>
+
+      <h2>3. Notion (Free for students)</h2>
+      <p>
+        <strong>Best for:</strong> Combining notes, tasks, and databases in one
+        workspace.
+      </p>
+      <p>
+        Notion's free student plan includes unlimited pages and blocks. Use it
+        to build a personal dashboard with links to your notes, calendar, and
+        to-do list.
+      </p>
+
+      <h2>Comparison</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Best For</th>
+            <th>Free Plan?</th>
+            <th>Mobile App?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Trello</td>
+            <td>Visual task boards</td>
+            <td>Yes (unlimited)</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Google Calendar</td>
+            <td>Scheduling</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Notion</td>
+            <td>All-in-one workspace</td>
+            <td>Yes (students)</td>
+            <td>Yes</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="reference-box">
+        <h4>References</h4>
+        <p>
+          Atlassian. (2025).
+          <em>Trello — Manage Your Team Projects From Anywhere</em>.
+          https://trello.com
+        </p>
+        <p>
+          Google. (2025). <em>Google Calendar</em>. https://calendar.google.com
+        </p>
+        <p>
+          Notion Labs. (2025). <em>Notion — Your connected workspace</em>.
+          https://www.notion.so
+        </p>
+      </div>
+
+      <button class="back-btn" onclick="showPage('page-home')">
+        ← Back to Home
+      </button>
+    </div>
+
+    <!-- ============================================
+       DEV TEAM SECTION (NEW ADDITION)
+       ============================================ -->
+    <section class="dev-team-section">
+      <h2>Dev Team</h2>
+      <div class="dev-grid">
+        <!-- Team Member 1 -->
+        <div class="dev-card">
+          <img src="photo.jpg" />
+          <h3>RIMURU</h3>
+          <p>Student Developer / Coder</p>
+        </div>
+
+        <!-- Team Member 2 -->
+        <div class="dev-card">
+          <img src="photogirl.jpg" />
+          <h3>Ayane Shirakawa</h3>
+          <p>Student Developer / Tester</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+       GLOBAL FOOTER (always visible)
+       ============================================ -->
+    <footer id="contact" class="site-footer">
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <p><i class="fas fa-envelope"></i> example@studyhub.com</p>
+        <p><i class="fas fa-phone"></i> (+99) 123-4567</p>
+      </div>
+      <div class="footer-col">
+        <h4>Credits</h4>
+        <p>
+          Images:
+          <a href="https://placehold.com" target="_blank" rel="noopener"
+            >placehold.com</a
+          >
+        </p>
+        <p>
+          Icons:
+          <a href="https://fontawesome.com" target="_blank" rel="noopener"
+            >Font Awesome.com</a
+          >
+        </p>
+        <p>Website <em>Technical Writing</em>, Chapter. 7.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <p>
+          <a
+            href="#"
+            onclick="
+              alert(
+                'Privacy Policy: StudyHub is a student demo and does not collect personal data.',
+              );
+              return false;
+            "
+            >Privacy Policy</a
+          >
+        </p>
+        <p>
+          <a
+            href="#"
+            onclick="
+              alert(
+                'Disclaimer: StudyHub is an educational student project. Content is for learning purposes only.',
+              );
+              return false;
+            "
+            >Disclaimer</a
+          >
+        </p>
+      </div>
+      <p class="last-update">Last updated: <span id="lastUpdate"></span></p>
+    </footer>
+
+    <script>
+      /* ============================================
+       StudyHub — Page-by-Page Script (FIXED SEARCH)
+       ============================================ */
+
+      /* ---------- PAGE SWITCHER (no scrolling between pages) ---------- */
+      function showPage(pageId) {
+        // Hide all pages
+        document
+          .querySelectorAll(".page")
+          .forEach((p) => p.classList.remove("active"));
+
+        // Show the target page
+        const target = document.getElementById(pageId);
+        if (target) {
+          target.classList.add("active");
+          // Instantly jump to the top — no scrolling
+          window.scrollTo(0, 0);
+        }
+      }
+      // Make it available globally for inline onclick
+      window.showPage = showPage;
+
+      /* ---------- SCROLL TO CONTACT (fade only the footer, normal speed) ---------- */
+      function scrollToContact() {
+        const footer = document.getElementById("contact");
+
+        // Instantly scroll to the footer (same snappy feel as other buttons)
+        footer.scrollIntoView({ behavior: "auto", block: "start" });
+
+        // Add the fade-in class to the footer only
+        footer.classList.add("fade-in-footer");
+
+        // Remove the class after the animation finishes so it can be re-triggered
+        // CHANGED: Now 200ms to match the new normal animation speed
+        setTimeout(() => {
+          footer.classList.remove("fade-in-footer");
+        }, 200);
+      }
+      window.scrollToContact = scrollToContact;
+
+      document.addEventListener("DOMContentLoaded", () => {
+        /* ---------- LIVE SEARCH ---------- */
+        const searchInput = document.getElementById("searchInput");
+        const searchBtn = document.getElementById("searchBtn");
+        // Get ONLY the cards inside the Blog page to avoid duplicate results
+        const blogCards = document.querySelectorAll("#page-blog .post-card");
+
+        function filterPosts() {
+          const query = searchInput.value.trim().toLowerCase();
+
+          // 1. If the user types something, force them to the Blog page
+          if (query.length > 0) {
+            const blogPage = document.getElementById("page-blog");
+            if (!blogPage.classList.contains("active")) {
+              showPage("page-blog");
+            }
+          }
+
+          // 2. Filter the blog cards
+          blogCards.forEach((card) => {
+            // Get the title and text inside the card
+            const title = (
+              card.querySelector("h3")?.textContent || ""
+            ).toLowerCase();
+            const text = card.textContent.toLowerCase();
+
+            // Check if the search query matches
+            const match = title.includes(query) || text.includes(query);
+
+            // Show or hide based on match
+            card.style.display = match ? "flex" : "none";
+          });
+        }
+
+        // Run filter when typing
+        searchInput.addEventListener("input", filterPosts);
+
+        // Run filter when clicking the button
+        searchBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          filterPosts();
+        });
+
+        // Run filter when pressing Enter
+        searchInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            filterPosts();
+          }
+        });
+
+        /* ---------- AUTO "LAST UPDATED" DATE ---------- */
+        const lastUpdate = document.getElementById("lastUpdate");
+        if (lastUpdate) {
+          const today = new Date();
+          lastUpdate.textContent = today.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+        }
+
+        /* ---------- BACK-TO-TOP BUTTON ---------- */
+        const backBtn = document.createElement("button");
+        backBtn.textContent = "↑";
+        backBtn.setAttribute("aria-label", "Back to top");
+        backBtn.style.cssText =
+          "position:fixed;bottom:24px;right:24px;width:44px;height:44px;" +
+          "border-radius:50%;border:none;background:#4a90d9;color:#fff;" +
+          "font-size:1.3rem;cursor:pointer;display:none;box-shadow:0 2px 8px rgba(0,0,0,.2);z-index:200;";
+        document.body.appendChild(backBtn);
+
+        window.addEventListener("scroll", () => {
+          backBtn.style.display = window.scrollY > 400 ? "block" : "none";
+        });
+
+        backBtn.addEventListener("click", () => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      });
+    </script>
+  </body>
+</html>
